@@ -1,9 +1,19 @@
 var express = require('express');
+var request = require('request');
 var bodyParser = require('body-parser');
 var app = express();
+var pug = require('pug');
+const _= require('lodash');
+var path =require('path');
+const { timeStamp } = require('console');
+//var Post = require('./models/post')
+
+//const{Donor}=require ('./models/donor')
+//const {initializePayment, verifyPayment}= require('./config/paystack')(request);
 
 
 app.use(bodyParser.json({ type: 'application/json' }));
+app.use*bodyParser.urlencoded({extended : false})
 const hostname = "127.0.0.1";
 const port = 3000;
 
@@ -39,15 +49,32 @@ var json = {
     "subMerId": "0000000001700001"
 }
 
+var callBackRes={
+    "name":"Testing",
+    "url": "https://851f-45-125-4-5.ngrok.io/",
+    "msg":"Callback Successful",
+}
 
 
 //Handle callback Url
+// app.get('/:callback', (req, res) => {
+
+//     res.send(responseCode);
+//     const theData = res.body;
+//     console.log(theData);
+//     console.log(req.body);
+// });
+
+//Handle callback Url
 app.post('/:callback', (req, res) => {
+
+    console.log(req.body);  
     res.send(responseCode);
     const theData = res.body;
     console.log(theData);
-    console.log(req.body);
 });
+
+
 
 //Handle GET request
 app.get('/', function (req, res) {
