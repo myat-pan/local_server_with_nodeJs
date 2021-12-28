@@ -20,6 +20,24 @@ const port = 3000;
 const statusOK = 200;
 const statusNotFound = 404;
 
+var Pusher = require('pusher');
+//create a instance of pusher using your credentials
+var pusher = new Pusher({
+  appId: "1321992",
+  key: "6f1153d1c6b4c827e1c1",
+  secret: "9611e671d9af5bc6ed68",
+  cluster: 'ap1',
+  encrypted: true
+  
+});
+
+// var channel = pusher.subscribe("public");
+
+pusher.trigger('public', 'create', {
+    message: "Testing WebScokcet Channel with Pusher"
+});
+
+
 var responseCode = {
     "responseCode": "0000",
     "responseMsg": "Operation Success"
@@ -56,12 +74,12 @@ var callBackRes={
 }
 
 
-//Handle callback Url
-// app.get('/:callback', (req, res) => {
+// //Handle callback Url
+// app.get('/:callbackurl', (req, res) => {
 
-//     res.send(responseCode);
-//     const theData = res.body;
-//     console.log(theData);
+//     res.send(request.body);
+//    // const theData = res.body;
+//    // console.log(theData);
 //     console.log(req.body);
 // });
 
@@ -75,16 +93,15 @@ app.post('/:callback', (req, res) => {
 });
 
 
-
 //Handle GET request
 app.get('/', function (req, res) {
-    if (mockDatabase.length < 1) {
-        res.statusCode = statusNotFound;
-        res.send('Item not found');
-        return;
-    }
-    res.statusCode = statusOK;
-    res.send(json);
+    // if (mockDatabase.length < 1) {
+    //     res.statusCode = statusNotFound;
+    //     res.send('Item not found');
+    //     return;
+    // }
+    // res.statusCode = statusOK;
+    // res.send(json);
 });
 
 //Handle Get(one)request
