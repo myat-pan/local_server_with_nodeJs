@@ -31,10 +31,9 @@ var pusher = new Pusher({
   
 });
 
-// var channel = pusher.subscribe("public");
 
 pusher.trigger('public', 'create', {
-    message: "Testing WebScokcet Channel with Pusher"
+    message: "Testing WebSocket Channel with Pusher"
 });
 
 
@@ -43,16 +42,6 @@ var responseCode = {
     "responseMsg": "Operation Success"
 }
 
-var mockDatabase = [
-    {
-        fruit: "apple",
-        color: "red"
-    },
-    {
-        fruit: "banana",
-        color: "yellow"
-    }
-]
 
 var json = {
     "authenToken": "3f783751c9ef36b21bb7035776ee8ca8daf886f463c4bc4527abc1b1e07c60c599c70904da9014b65da5ee935db0c2c8b62624cb2661c5539748734f86090556",
@@ -74,15 +63,6 @@ var callBackRes={
 }
 
 
-// //Handle callback Url
-// app.get('/:callbackurl', (req, res) => {
-
-//     res.send(request.body);
-//    // const theData = res.body;
-//    // console.log(theData);
-//     console.log(req.body);
-// });
-
 //Handle callback Url
 app.post('/:callback', (req, res) => {
 
@@ -95,43 +75,46 @@ app.post('/:callback', (req, res) => {
 
 //Handle GET request
 app.get('/', function (req, res) {
-    // if (mockDatabase.length < 1) {
-    //     res.statusCode = statusNotFound;
-    //     res.send('Item not found');
-    //     return;
-    // }
-    // res.statusCode = statusOK;
-    // res.send(json);
-});
-
-//Handle Get(one)request
-app.get('/:id', function (req, res) {
-    var id = req.params.id;
-    if (id < 0 || id >= mockDatabase.length) {
+    if (mockDatabase.length < 1) {
         res.statusCode = statusNotFound;
         res.send('Item not found');
         return;
     }
     res.statusCode = statusOK;
-    res.send(mockDatabase[id]);
+    res.send(json);
 });
 
-//Handle POST request
-app.post('/', function (req, res) {
-    var newObject = req.body;
-    mockDatabase.push(newObject);
-    var id = mockDatabase.length - 1;
-    res.statusCode = statusOK;
-    res.send(`Item ad with id${id}`);
-});
+//Handle Get(one)request
+// app.get('/:id', function (req, res) {
+//     var id = req.params.id;
+//     if (id < 0 || id >= mockDatabase.length) {
+//         res.statusCode = statusNotFound;
+//         res.send('Item not found');
+//         return;
+//     }
+//     res.statusCode = statusOK;
+//     res.send(mockDatabase[id]);
+// });
 
-//Handle DELETE request
-app.delete('/:id', function (req, res) {
-    var id = req.params.id;
-    mockDatabase.splice(id, 1);
-    res.statusCode = statusOK;
-    res.send(`Item deleted at id ${id}`);
-});
+// //Handle POST request
+// app.post('/', function (req, res) {
+//     var newObject = req.body;
+//     mockDatabase.push(newObject);
+//     var id = mockDatabase.length - 1;
+//     res.statusCode = statusOK;
+//     res.send(`Item ad with id${id}`);
+// });
+
+// //Handle DELETE request
+// app.delete('/:id', function (req, res) {
+//     var id = req.params.id;
+//     mockDatabase.splice(id, 1);
+//     res.statusCode = statusOK;
+//     res.send(`Item deleted at id ${id}`);
+// });
+
+
+
 
 app.listen(port, hostname, function () {
     console.log(`Listening at http://${hostname}:${port}/...`)
